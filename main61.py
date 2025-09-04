@@ -24,7 +24,8 @@ class Record:
     def add_phone(self,phone):
         if len(phone)!=10:
              return print('Номер повинен бути із 10 цифр')
-        self.phones.append(Phone(phone))
+        else:
+            self.phones.append(Phone(phone))
 
 
     def remove_phone(self,phone):
