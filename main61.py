@@ -26,18 +26,17 @@ class Record:
 
     def add_phone(self,phone):
         self.phones.append(Phone(phone))
-        return self.phones
 
 
     def remove_phone(self,phone):
-        self.phones.remove(self.find_phone(phone))
-        return self.phones
+        p=self.find_phone(phone)
+        self.phones.remove(p)
        
     
     def edit_phone(self,old_phone,new_phone):
-        self.phones.remove(self.find_phone(old_phone))
         self.add_phone(new_phone)
-        return self.phones
+        p=self.find_phone(old_phone)
+        self.remove_phone(p.value)
     
     
     def find_phone(self,phone):
@@ -71,6 +70,3 @@ class AddressBook(UserDict):
     
     def __str__(self):
         return '  '.join((f"(Name:{key},phones:{' '.join(p.value for p in self.data[key].phones)})" for key in self.data ))
-       
-          
-
