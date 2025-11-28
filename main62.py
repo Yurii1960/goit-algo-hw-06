@@ -1,4 +1,5 @@
 from collections import UserDict
+from datetime import datetime,date
 
 class Field:
     def __init__(self, value):
@@ -22,6 +23,10 @@ class Record:
     def __init__(self, name):
         self.name = Name(name)
         self.phones = []
+        self.birthday = None
+    
+    def add_birthday(self,birthday):
+        self.birthday = Birthday(birthday)
 
 
     def add_phone(self,phone):
@@ -49,9 +54,18 @@ class Record:
                 return p
            
                            
-    def __str__(self):
-        return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}"
-    
+class Birthday(Field):
+    def __init__(self, birthday):
+        try:
+            # Додайте перевірку коректності даних
+            # та перетворіть рядок на об'єкт datetime
+            data_birthday=datetime.strptime (birthday, '%d,%m,%Y')
+            self.birthday=data_birthday
+
+        except ValueError:
+            raise ValueError("Invalid date format. Use DD.MM.YYYY")
+
+
 class AddressBook(UserDict):
     def add_record (self,record):
         self.data[record.name.value]=record
@@ -81,6 +95,9 @@ book = AddressBook()
 john_record = Record("John")
 john_record.add_phone("1234567890")
 john_record.add_phone("1111111111")
+john_record.add_phone("11111")
+
+print(john_record.phones[1].value)
 #john_record.add_phone("222")
 print(john_record.find_phone("1234567890"))
 #john_record.edit_phone('222','A44')
